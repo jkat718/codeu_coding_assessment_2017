@@ -11,44 +11,46 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package com.google.codeu.codingchallenge;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 
 final class MyJSON implements JSON {
 
-  @Override
-  public JSON getObject(String name) {
-    // TODO: implement this
-    return null;
-  }
+    private final HashMap<String, JSON> objectChildren = new HashMap<>();
+    private final HashMap<String, String> stringChildren = new HashMap<>();
 
-  @Override
-  public JSON setObject(String name, JSON value) {
-    // TODO: implement this
-    return this;
-  }
+    @Override
+    public JSON getObject(String name) {
+        return this.objectChildren.get(name);
+    }
 
-  @Override
-  public String getString(String name) {
-    // TODO: implement this
-    return null;
-  }
+    @Override
+    public JSON setObject(String name, JSON value) {
+        this.objectChildren.put(name, value);
+        return this;
+    }
 
-  @Override
-  public JSON setString(String name, String value) {
-    // TODO: implement this
-    return this;
-  }
+    @Override
+    public String getString(String name) {
+        return this.stringChildren.get(name);
+    }
 
-  @Override
-  public void getObjects(Collection<String> names) {
-    // TODO: implement this
-  }
+    @Override
+    public JSON setString(String name, String value) {
+        this.stringChildren.put(name, value);
+        return this;
+    }
 
-  @Override
-  public void getStrings(Collection<String> names) {
-    // TODO: implement this
-  }
+    @Override
+    public void getObjects(Collection<String> names) {
+        names.addAll(this.objectChildren.keySet());
+    }
+
+    @Override
+    public void getStrings(Collection<String> names) {
+        names.addAll(this.stringChildren.keySet());
+    }
 }
